@@ -22,12 +22,12 @@ class App:
         label.place(x = 0, y = 0, relwidth = 1, relheight = 1)
 
         #Crea frame a la derecha
-        frame_form = tk.Frame(self.ventana, bd = 0, relief = tk.SOLID, bg = "#470501")
+        frame_form = tk.Frame(self.ventana, bd = 0, relief = tk.SOLID, bg = "#fcfcfc")
         frame_form.pack(side = "bottom", expand = tk.YES, fill = tk.BOTH)
 
-        frame_form_bottom = tk.Frame(frame_form, height = 300, bd = 0, relief = tk.SOLID, bg = "#470501")
+        frame_form_bottom = tk.Frame(frame_form, height = 300, bd = 0, relief = tk.SOLID, bg = "#fcfcfc")
         frame_form_bottom.pack(side = "top", fill = tk.BOTH)
-        title = tk.Label(frame_form_bottom, text = "Inicio de Sesion", font=("Arial", 30), bg="#470501", pady=10, fg="#fcfcfc")
+        title = tk.Label(frame_form_bottom, text = "Inicio de Sesion", font=("Arial", 30), bg="#fcfcfc", pady=10,)
         title.pack(expand = tk.YES, fill = tk.BOTH)
 
         
