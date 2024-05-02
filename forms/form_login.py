@@ -13,6 +13,6 @@ class App:
         self.ventana.geometry("800x500")
         self.ventana.config(bg = "#fcfcfc")
         self.ventana.resizable(width=0, height=0)
-        utl.centrar_ventana(self.ventana, 800, 500)
+        utl.centrar_ventana(self.ventana)
 
         self.ventana.mainloop()
