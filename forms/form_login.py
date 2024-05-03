@@ -13,7 +13,7 @@ class App:
             self.ventana.destroy()
             MasterPanel()
         else:
-            messagebox.showError(message="La contrase;a no es correcta", title = "Error")
+            messagebox.showerror(message="El usuario o contraseña no son correctos", title = "Error")
 
     def __init__(self):
         self.ventana = tk.Tk()
