@@ -64,6 +64,7 @@ class FormLoginDesigner:
         #TODO: No esta funcionando darle enter
         inicio.bind("<Return>", (lambda event: self.verificar()))
 
+        TODO: Agregar funcionalidad al boton
         inicio = tk.Button(frame_form, text = "Registrar usuario", font = ("Arial", 15), bg = "#fcfcfc", bd = 0, fg = "#3a7ff6", command = self.userSignup)
         inicio.pack(padx= 1, pady= 5)
 
