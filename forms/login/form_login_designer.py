@@ -1,19 +1,15 @@
 import tkinter as tk
-from tkinter import ttk, messagebox
+from tkinter import ttk
 from tkinter.font import BOLD
 import util.generic as utl
-from forms.form_master import MasterPanel
 
-class App:
+class FormLoginDesigner:
 
     def verificar(self):
-        usu = self.usuario.get()
-        password = self.password.get()
-        if(usu == "root" and password == "1234"):
-            self.ventana.destroy()
-            MasterPanel()
-        else:
-            messagebox.showerror(message="El usuario o contraseña no son correctos", title = "Error")
+        pass
+
+    def userSignup(self):
+        pass
 
     def __init__(self):
         self.ventana = tk.Tk()
@@ -64,10 +60,11 @@ class App:
         
         #Boton inicio de Sesion
         inicio = tk.Button(frame_form, text = "Iniciar sesion", font = ("Arial", 18, BOLD), bg = "#008000", command = self.verificar)
-        inicio.pack(padx= 5, pady= 25)
+        inicio.pack(padx= 5, pady= 15)
         #TODO: No esta funcionando darle enter
         inicio.bind("<Return>", (lambda event: self.verificar()))
 
-        self.ventana.mainloop()
+        inicio = tk.Button(frame_form, text = "Registrar usuario", font = ("Arial", 15), bg = "#fcfcfc", bd = 0, fg = "#3a7ff6", command = self.userSignup)
+        inicio.pack(padx= 1, pady= 5)
 
-app = App()
+        self.ventana.mainloop()

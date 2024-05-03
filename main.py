@@ -1,3 +1,3 @@
-from forms.form_login import App
+from forms.login.form_login import FormLogin
 
-App()
+FormLogin()
