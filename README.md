@@ -23,3 +23,5 @@ db: La carpeta "db" va a contener nuestra base de datos
 images: esta carpeta contiene las imagenes necesarias para el proyecto
 
 util: La carpeta de utilidades contiene scripts que nos pueden ayudar con nuestro proyecto, como centrar_ventana o leer_imagen
+
+**IMPORTANTE: Si quieren correr el programa haganlo desde el archivo main.py
