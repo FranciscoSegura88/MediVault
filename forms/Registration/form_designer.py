@@ -10,7 +10,7 @@ class FormRegisterDesigner():
         self.ventana.title("Registro de Usuario")
         self.ventana.config(bg="#fcfcfc")
         self.ventana.resizable(width=0, height=0)
-        utl.centrar_ventana(self.ventana, 600, 450)
+        utl.centrar_ventana(self.ventana, 500, 600)
 
         logo = utl.leer_imagen("./images/logo.png", (200, 200))
 
@@ -42,8 +42,8 @@ class FormRegisterDesigner():
 
         # Frame del entry de la contraseña
         frame_password = tk.Frame(frame_form, bd=0, relief=tk.SOLID, bg="#fcfcfc")
-
         frame_password.pack(fill=tk.X, padx=20, pady=5)
+
         etiqueta_password = tk.Label(frame_password, text="Contraseña", font=("Arial", 14), bg="#fcfcfc")
         etiqueta_password.pack(side="left", padx=(20,10), anchor="center", pady=4)
         self.password = ttk.Entry(frame_password, font=("Arial", 14))
@@ -53,14 +53,14 @@ class FormRegisterDesigner():
 
         # Frame del entry de la Confirmation
         frame_confirmation = tk.Frame(frame_form, bd=0, relief=tk.SOLID, bg="#fcfcfc")
-
         frame_confirmation.pack(fill=tk.X, padx=20, pady=5)
 
-        etiqueta_confirmation = tk.Label(frame_confirmation, text="Confirmacion", font=('Arial', 14), fg="#666a88", bg='#fcfcfc', anchor="w")
-        etiqueta_confirmation.pack(fill=tk.X, padx=20, pady=5)
+        etiqueta_confirmation = tk.Label(frame_confirmation, text="Confirmacion", font=('Arial', 14), bg='#fcfcfc')
+        etiqueta_confirmation.pack(side="left", padx=(20,10), anchor="center", pady=4)
         self.confirmation = ttk.Entry(frame_confirmation, font=('Times', 14))
-        self.confirmation.pack(fill=tk.X, padx=20, pady=10)
         self.confirmation.config(show="*")
+        self.confirmation.pack(fill=tk.X, padx=20, pady=10)
+        
 
 
         #TODO: Boton de Registrar

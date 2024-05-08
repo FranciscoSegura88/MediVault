@@ -21,7 +21,7 @@ class FormLogin(FormLoginDesigner):
         if(self.isUser(user_db)):
             self.isPassword(self.password.get(), user_db)
 
-    def userRegister(self):
+    def userSignup(self):
         FormRegister().mainloop()
 
     def isUser(self, user: Auth_User):
