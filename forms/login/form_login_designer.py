@@ -19,6 +19,9 @@ class FormLoginDesigner:
         self.ventana.resizable(width=0, height=0)
         utl.centrar_ventana(self.ventana, 500, 600)
 
+        icono = tk.PhotoImage(file="./images/logo.png")
+        self.ventana.iconphoto(True, icono)
+        
         logo = utl.leer_imagen("./images/logo.png", (200, 200))
 
         # Frame del logo
