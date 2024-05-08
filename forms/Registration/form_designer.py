@@ -27,7 +27,7 @@ class FormRegisterDesigner():
         # Frame del texto "Registro de Usuario"
         frame_form_text = tk.Frame(frame_form, bd=0, relief=tk.SOLID, bg="#fcfcfc")
         frame_form_text.pack(side="top", fill=tk.BOTH)
-        title = tk.Label(frame_form_text, text="Registro de usuario", font=("Arial", 30), bg="black", pady=10)
+        title = tk.Label(frame_form_text, text="Registro de usuario", font=("Arial", 30), bg="#fcfcfc", pady=10)
         title.pack(fill=tk.BOTH, expand=True)
 
         # Frame del entry de usuario
@@ -35,7 +35,7 @@ class FormRegisterDesigner():
         frame_usuario.pack(fill=tk.X, padx=20, pady=5)
 
         etiqueta_usuario = tk.Label(frame_usuario, text="Usuario", font=("Arial", 14), bg="#fcfcfc")
-        etiqueta_usuario.pack(side="left", padx=(20,10), anchor="center", pady=40)
+        etiqueta_usuario.pack(side="left", padx=(20,10), anchor="center", pady=4)
 
         self.usuario = ttk.Entry(frame_usuario, font=("Arial", 14))
         self.usuario.pack(fill=tk.X, padx=(0,20), pady=40)

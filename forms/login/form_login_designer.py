@@ -59,7 +59,7 @@ class FormLoginDesigner:
         self.password.pack(fill=tk.X, padx=(0,20))
         
         #Boton inicio de Sesion
-        inicio = tk.Button(frame_form, text = "Iniciar sesion", font = ("Arial", 18, BOLD), bg = "#008000", command = self.verificar)
+        inicio = tk.Button(frame_form, text = "Iniciar sesion", font = ("Arial", 18, BOLD), bg = "#ffd700", command = self.verificar)
         inicio.pack(padx= 5, pady= 15)
         #TODO: No esta funcionando darle enter
         inicio.bind("<Return>", (lambda event: self.verificar()))
