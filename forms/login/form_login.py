@@ -7,6 +7,7 @@ from forms.login.form_login_designer import FormLoginDesigner
 from persistence.model import Auth_User
 import util.encoding_decoding as end_dec
 from persistence.repository.auth_user_repository import AuthUserRepository
+from forms.Registration.form import FormRegister
 
 class FormLogin(FormLoginDesigner):
 
@@ -19,6 +20,9 @@ class FormLogin(FormLoginDesigner):
 
         if(self.isUser(user_db)):
             self.isPassword(self.password.get(), user_db)
+
+    def userRegister(self):
+        FormRegister().mainloop()
 
     def isUser(self, user: Auth_User):
         status: bool = True
