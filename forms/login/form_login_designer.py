@@ -43,20 +43,16 @@ class FormLoginDesigner:
         # Frame del entry de usuario
         frame_usuario = tk.Frame(frame_form, bd=0, relief=tk.SOLID, bg="#fcfcfc")
         frame_usuario.pack(fill=tk.X, padx=20, pady=5)
-
         etiqueta_usuario = tk.Label(frame_usuario, text="Usuario", font=("Arial", 14), bg="#fcfcfc")
         etiqueta_usuario.pack(side="left", padx=(20,10), anchor="center", pady=40)
-
         self.usuario = ttk.Entry(frame_usuario, font=("Arial", 14))
         self.usuario.pack(fill=tk.X, padx=(0,20), pady=40)
 
         # Frame del entry de la contraseña
         frame_password = tk.Frame(frame_form, bd=0, relief=tk.SOLID, bg="#fcfcfc")
         frame_password.pack(fill=tk.X, padx=20, pady=5)
-
         etiqueta_password = tk.Label(frame_password, text="Contraseña", font=("Arial", 14), bg="#fcfcfc")
         etiqueta_password.pack(side="left", padx=(20,10), anchor="center", pady=4)
-
         self.password = ttk.Entry(frame_password, font=("Arial", 14))
         self.password.config(show="*")
         self.password.pack(fill=tk.X, padx=(0,20))
