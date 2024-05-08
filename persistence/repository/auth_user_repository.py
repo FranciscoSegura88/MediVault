@@ -9,7 +9,7 @@ class AuthUserRepository():
     def getUserByUserName(self, user_name: str):
         user: Auth_User = None
         with Session(self.engine) as session:
-            user = session.query(Auth_User).filter_by(username = user_name).first()
+            user = session.query(Auth_User).filter_by(nombre_usuario = user_name).first()
             return 
         
     def insertUser(self, user: Auth_User):

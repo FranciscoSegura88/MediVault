@@ -21,6 +21,7 @@ class Hospital(Base):
     direccion = Column(String(100), nullable=False)
     telefono = Column(String(12), nullable=False)
     correo_electronico = Column(String(30))
+    medicos = relationship("Medico", back_populates="hospital")
 
 class Medico(Base):
     __tablename__ = 'medico'
@@ -34,6 +35,7 @@ class Medico(Base):
     especialidad = Column(String(40), nullable=False)
     consulta = Column(Integer)
     hospital = relationship("Hospital", back_populates="medicos")
+    citas = relationship("Cita", back_populates="medico")
 
 class Paciente(Base):
     __tablename__ = 'paciente'
@@ -46,7 +48,10 @@ class Paciente(Base):
     correo_electronico = Column(String(30))
     genero = Column(Enum('Hombre', 'Mujer', 'No Binario'))
     fecha_nacimiento = Column(Date, nullable=False)
-    seguro = relationship("Seguro", back_populates="pacientes")
+    seguro = relationship("Seguro", back_populates="paciente")
+    citas = relationship("Cita", back_populates="paciente")
+    historial = relationship("HistorialClinico", back_populates="paciente")
+    pruebas = relationship("Prueba", back_populates="paciente")
 
 class Cita(Base):
     __tablename__ = 'cita'
@@ -66,7 +71,8 @@ class Diagnostico(Base):
     id_prueba = Column(Integer, ForeignKey('prueba.id_prueba'))
     descripcion = Column(Text, nullable=False)
     comentarios = Column(Text, nullable=False)
-    prueba = relationship("Prueba", back_populates="diagnosticos")
+    prueba = relationship("Prueba", back_populates="diagnostico")
+    tratamientos = relationship("Tratamiento", back_populates="diagnostico")
 
 class HistorialClinico(Base):
     __tablename__ = 'historial_clinico'
@@ -83,14 +89,14 @@ class Prueba(Base):
     fecha_prueba = Column(Date, nullable=False)
     resultado = Column(Text, nullable=False)
     paciente = relationship("Paciente", back_populates="pruebas")
-    diagnosticos = relationship("Diagnostico", back_populates="prueba")
+    diagnostico = relationship("Diagnostico", back_populates="prueba")
 
 class Seguro(Base):
     __tablename__ = 'seguro'
 
     id_seguro = Column(Integer, primary_key=True)
     nombre = Column(String(50), nullable=False)
-    pacientes = relationship("Paciente", back_populates="seguro")
+    paciente = relationship("Paciente", back_populates="seguro")
 
 class Tratamiento(Base):
     __tablename__ = 'tratamiento'
