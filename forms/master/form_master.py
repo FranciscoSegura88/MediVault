@@ -32,9 +32,11 @@ class MasterPanel:
         #NSS
         nss_Frame = tk.Frame(frame, bg="#3a7ff6")
         nss_Frame.place(relx= 0.05, rely=0.1)
-        nss_Label = tk.Label(nss_Frame, text="NSS: ", font=("Arial", 30), bg="#3a7ff6", fg="#fcfcfc")
-        nss_Label.pack(side="top", pady=5)
+        nss_Label = tk.Label(nss_Frame, text="NSS:", font=("Arial", 30), bg="#3a7ff6", fg="#fcfcfc")
+        nss_Label.pack(side="left", padx=(0,20))
         self.nss = ttk.Entry(nss_Frame, font=("Arial", 30))
-        self.nss.pack(side="top", fill=tk.X, padx=(0, 20))
+        self.nss.pack(side="left", fill=tk.X, padx=(0, 20))
+        #TODO: AGREGAR FUNCIONALIDAD AL BOTON
+        tk.Button(nss_Frame, text="Buscar",font=("Arial", 19)).pack(side="left")
 
         self.ventana.mainloop()
