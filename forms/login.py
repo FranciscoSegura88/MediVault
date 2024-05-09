@@ -1,34 +1,46 @@
 import tkinter as tk
-from tkinter import ttk
-from tkinter.font import BOLD
-import util.generic as utl
-from persistence.model import *
+from tkinter import ttk, messagebox
+from PIL import ImageTk, Image
+import sqlite3
+from forms.signup import Signup_Form
+from forms.master import App
 
-class FormLoginDesigner:
-
-    def verificar(self):
-        pass
+class Login_Form:
 
     def userSignup(self):
-        pass
+        Signup_Form()
+
+    def verificar(self):
+        # Conectar a la base de datos
+        conexion = sqlite3.connect("./db/usuarios.db")
+        cursor = conexion.cursor()
+
+        # Verificar usuario y contraseña
+        usuario = self.usuario.get()
+        contraseña = self.password.get()
+        cursor.execute("SELECT * FROM usuarios WHERE usuario = ? AND contraseña = ?", (usuario, contraseña))
+        resultado = cursor.fetchone()
+        conexion.close()
+
+        if resultado:
+            self.ventana.destroy()
+            App()
+        else:
+            messagebox.showerror("Error", "Usuario o contraseña incorrectos")
 
     def __init__(self):
         self.ventana = tk.Tk()
-        self.ventana.title("Inicio de sesión")
+        self.ventana.title("MedVault")
         self.ventana.geometry("500x600")
-        self.ventana.config(bg="#fcfcfc")
         self.ventana.resizable(width=0, height=0)
-        utl.centrar_ventana(self.ventana, 500, 600)
 
-        icono = tk.PhotoImage(file="./images/logo.png")
-        self.ventana.iconphoto(True, icono)
-        
-        logo = utl.leer_imagen("./images/logo.png", (200, 200))
-
+        banner = ImageTk.PhotoImage(Image.open("./images/logo.png").resize((200,200)))
+        self.ventana.iconphoto(True, banner)
+            
         # Frame del logo
-        frame_logo = tk.Frame(self.ventana, bd=0, height=200, relief=tk.SOLID, padx=5, pady=2, bg="#ffd700")
+        frame_logo = tk.Frame(self.ventana, bd=0, height=50, relief=tk.SOLID, padx=5, pady=2, bg="#ffd700")
         frame_logo.pack(side="top", expand=tk.NO, fill=tk.BOTH)
-        label = tk.Label(frame_logo, image=logo, bg="#ffd700")
+        label = tk.Label(frame_logo, image=banner, bg="#ffd700")
         label.pack(fill=tk.BOTH, expand=True)
 
         # Frame del formulario
@@ -58,14 +70,13 @@ class FormLoginDesigner:
         self.password.config(show="*")
         self.password.pack(fill=tk.X, padx=(0,20))
         
-        #Boton inicio de Sesion
-        inicio = tk.Button(frame_form, text = "Iniciar sesion", font = ("Arial", 18, BOLD), bg = "#ffd700", command = self.verificar)
-        inicio.pack(padx= 5, pady= 15)
-        #TODO: No esta funcionando darle enter
-        self.ventana.bind("<Return>", (lambda event: self.verificar()))
+        # Botón inicio de Sesión
+        inicio = tk.Button(frame_form, text="Iniciar sesión", font=("Arial", 18), bg="#ffd700", command=self.verificar)
+        inicio.pack(padx=5, pady=15)
+        self.ventana.bind("<Return>", (lambda event: self.verificar()))  # Para ejecutar la verificación al presionar "Enter"
 
-        #TODO: Agregar funcionalidad al boton
-        inicio = tk.Button(frame_form, text = "Registrar usuario", font = ("Arial", 15), bg = "#fcfcfc", bd = 0, fg = "#3a7ff6", command = self.userSignup)
-        inicio.pack(padx= 1, pady= 5)
+        # Botón para abrir el formulario de registro
+        registro = tk.Button(frame_form, text="Registrar usuario", font=("Arial", 15), bg="#fcfcfc", bd=0, fg="#3a7ff6", command=self.userSignup)
+        registro.pack(padx=1, pady=5)
 
         self.ventana.mainloop()

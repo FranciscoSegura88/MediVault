@@ -1,7 +1,5 @@
-from forms.login.form_login import FormLogin
-from forms.master.form_master import MasterPanel
-from forms.Registration.form import FormRegister
+from forms.login import Login_Form
+from forms.signup import Signup_Form
 
-#FormRegister()
-#MasterPanel()
-FormLogin() 
+#Signup_Form()
+Login_Form()
