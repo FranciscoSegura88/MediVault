@@ -2,8 +2,46 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter.font import BOLD
 import util.generic as utl
+from persistence.model import *
 
 class MasterPanel:
+
+    #TEST
+    def buscar_paciente(self):
+        nss = self.nss.get()
+        if nss:
+            # Crear la conexión a la base de datos
+            engine = create_engine('sqlite:///hospital.db')
+            Base.metadata.bind = engine
+            DBSession = sessionmaker(bind=engine)
+            session = DBSession()
+            
+            try:
+                # Buscar al paciente en la base de datos
+                paciente = session.query(Paciente).filter_by(numero_sc=nss).first()
+                if paciente:
+                    # Imprimir la información del paciente
+                    print("Información del paciente:")
+                    print(f"NSS: {paciente.numero_sc}")
+                    print(f"Nombre: {paciente.nombre}")
+                    print(f"Teléfono: {paciente.telefono}")
+                    print(f"Dirección: {paciente.direccion}")
+                    print(f"Correo electrónico: {paciente.correo_electronico}")
+                    print(f"Género: {paciente.genero}")
+                    print(f"Fecha de nacimiento: {paciente.fecha_nacimiento}")
+                    print(f"Seguro: {paciente.seguro.nombre}")
+                else:
+                    print("No se encontró ningún paciente con ese NSS.")
+            except SQLAlchemyError as e:
+                print("Error de base de datos:", e)
+            finally:
+                session.close()
+        else:
+            print("Ingrese un NSS válido.")
+
+        #TEST
+
+
     def __init__(self):
         self.ventana = tk.Tk()
         self.ventana.title("MedVault")

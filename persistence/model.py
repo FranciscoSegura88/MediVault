@@ -10,8 +10,6 @@ class Auth_User(Base):
     id_usuario = Column(Integer, primary_key=True)
     nombre_usuario = Column(String(50), nullable=False, unique=True)
     contrasena = Column(String(50), nullable=False)
-    tipo_usuario = Column(Enum('Admin', 'Medico', 'Paciente'), nullable=False)
-
     
 class Hospital(Base):
     __tablename__ = 'hospital'

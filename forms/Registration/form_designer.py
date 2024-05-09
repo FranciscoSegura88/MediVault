@@ -64,8 +64,6 @@ class FormRegisterDesigner():
         self.confirmation.config(show="*")
         self.confirmation.pack(fill=tk.X, padx=20, pady=10)
         
-
-
         #TODO: Boton de Registrar
         register = tk.Button(frame_form, text="Registrar", font=('Arial', 15), bg='#F87474', bd=0, fg="#fff", command=self.register)
         register.pack(fill=tk.X, padx=1, pady=5)
@@ -73,5 +71,5 @@ class FormRegisterDesigner():
         
         self.ventana.mainloop()
 
-    def register():
+    def register(self, event = None):
         pass

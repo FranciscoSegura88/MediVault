@@ -17,23 +17,21 @@ class FormLogin(FormLoginDesigner):
 
     def verificar(self):
         user_db: Auth_User = self.auth_repository.getUserByUserName(self.usuario.get())
-
-        if(self.isUser(user_db)):
+        if self.isUser(user_db):
             self.isPassword(self.password.get(), user_db)
 
     def userSignup(self):
         FormRegister().mainloop()
 
     def isUser(self, user: Auth_User):
-        status: bool = True
-        if(user == None):
-            status = False
+        if user is None:
             messagebox.showerror(message="El usuario no existe, favor de registrarse", title="Mensaje")
-            return status
+            return False
+        return True
 
     def isPassword(self, password: str, user: Auth_User):
-        b_password = end_dec.decrypt(user.password)
-        if(password == b_password):
+        b_password = end_dec.decrypt(user.password).decode("utf-8")
+        if password == b_password:
             self.ventana.destroy()
             MasterPanel()
         else:

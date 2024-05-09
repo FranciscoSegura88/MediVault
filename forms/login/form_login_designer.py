@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter.font import BOLD
 import util.generic as utl
+from persistence.model import *
 
 class FormLoginDesigner:
 
@@ -61,7 +62,7 @@ class FormLoginDesigner:
         inicio = tk.Button(frame_form, text = "Iniciar sesion", font = ("Arial", 18, BOLD), bg = "#ffd700", command = self.verificar)
         inicio.pack(padx= 5, pady= 15)
         #TODO: No esta funcionando darle enter
-        inicio.bind("<Return>", (lambda event: self.verificar()))
+        self.ventana.bind("<Return>", (lambda event: self.verificar()))
 
         #TODO: Agregar funcionalidad al boton
         inicio = tk.Button(frame_form, text = "Registrar usuario", font = ("Arial", 15), bg = "#fcfcfc", bd = 0, fg = "#3a7ff6", command = self.userSignup)
