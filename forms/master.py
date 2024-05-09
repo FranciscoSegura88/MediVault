@@ -64,11 +64,21 @@ class App:
         except Exception as e:
             messagebox.showerror("Error", f"No se pudo obtener la lista de pacientes: {e}")
 
-    def obtener_info_paciente(self):
-        numero_sc = self.nss.get()
-        if not numero_sc:
-            messagebox.showwarning("Advertencia", "Por favor, ingrese el NSS del paciente.")
-            return
+    def obtener_info_paciente(self, event=None):
+        if event is None:  # Si el evento es None, significa que la función se llama desde el botón de buscar
+            numero_sc = self.nss.get()
+            if not numero_sc:
+                messagebox.showwarning("Advertencia", "Por favor, ingrese el NSS del paciente.")
+                return
+        else:  # Si el evento no es None, significa que la función se llama desde la lista de pacientes guardados
+            seleccion = self.lista_pacientes.curselection()
+            if not seleccion:
+                messagebox.showwarning("Advertencia", "Por favor, seleccione un paciente de la lista.")
+                return
+
+            indice = seleccion[0]
+            paciente_seleccionado = self.lista_pacientes.get(indice)
+            numero_sc = paciente_seleccionado.split(" - ")[1]
 
         try:
             conn = sqlite3.connect('./db/medvault.db')
@@ -87,7 +97,7 @@ class App:
     def mostrar_info_paciente(self, paciente):
         ventana_info_paciente = tk.Toplevel()
         ventana_info_paciente.title("Información del Paciente")
-        ventana_info_paciente.geometry("400x300")
+        ventana_info_paciente.geometry("600x400")
 
         frame_info = tk.Frame(ventana_info_paciente, bd=2, relief=tk.SOLID, bg="#fcfcfc")
         frame_info.pack(expand=True, fill=tk.BOTH, padx=10, pady=10)
@@ -205,10 +215,9 @@ class App:
 
         # Etiqueta y botón de "cerrar sesión"
         etiqueta_cerrarsesion = tk.Button(self.ventana, text="Cerrar Sesión", font=("Arial", 12), bg="#fcfcfc", bd=0, command=self.cerrar_sesion)
-        etiqueta_cerrarsesion.place(relx=1.0, rely=0.0, anchor="ne")
+        etiqueta_cerrarsesion.place(relx=0.9, rely=0.9, anchor="ne")
 
         self.ventana.mainloop()
 
     def validate_nss(self, new_text):
         return re.match("^[0-9]*$", new_text) is not None
-
