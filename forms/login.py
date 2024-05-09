@@ -11,35 +11,35 @@ class Login_Form:
         Signup_Form()
 
     def verificar(self):
-        # Conectar a la base de datos
-        conexion = sqlite3.connect("./db/usuarios.db")
-        cursor = conexion.cursor()
+        try:
+            # Conectar a la base de datos
+            with sqlite3.connect("./db/usuarios.db") as conexion:
+                cursor = conexion.cursor()
 
-        # Verificar si el usuario existe
-        usuario = self.usuario.get()
-        contraseña = self.password.get()
-        cursor.execute("SELECT * FROM usuarios WHERE usuario = ?", (usuario,))
-        resultado = cursor.fetchone()
+                # Verificar si el usuario existe
+                usuario = self.usuario.get()
+                contraseña = self.password.get()
+                cursor.execute("SELECT * FROM usuarios WHERE usuario = ?", (usuario,))
+                resultado = cursor.fetchone()
 
-        if resultado:
-            # Verificar la contraseña
-            cursor.execute("SELECT * FROM usuarios WHERE usuario = ? AND contraseña = ?", (usuario, contraseña))
-            resultado = cursor.fetchone()
-            if resultado:
-                self.ventana.destroy()
-                App()
-            else:
-                messagebox.showerror("Error", "Contraseña incorrecta")
-        else:
-            # Crear nuevo usuario
-            respuesta = messagebox.askquestion("Usuario no encontrado", "El usuario no existe, ¿desea registrarse?")
-            if respuesta == "yes":
-                Signup_Form()
-            else:
-                messagebox.showinfo("Información", "Puede registrarse cuando lo desee")
-
-        conexion.close()
-
+                if resultado:
+                    # Verificar la contraseña
+                    cursor.execute("SELECT * FROM usuarios WHERE usuario = ? AND contraseña = ?", (usuario, contraseña))
+                    resultado = cursor.fetchone()
+                    if resultado:
+                        self.ventana.destroy()
+                        App()
+                    else:
+                        messagebox.showerror("Error", "Contraseña incorrecta")
+                else:
+                    # Crear nuevo usuario
+                    respuesta = messagebox.askquestion("Usuario no encontrado", "El usuario no existe, ¿desea registrarse?")
+                    if respuesta == "yes":
+                        Signup_Form()
+                    else:
+                        messagebox.showinfo("Información", "Puede registrarse cuando lo desee")
+        except Exception as e:
+            messagebox.showerror("Error", f"Ocurrió un error: {e}")
 
     def __init__(self):
         self.ventana = tk.Tk()

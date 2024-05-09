@@ -9,40 +9,38 @@ class Signup_Form:
         self.ventana.destroy()
 
     def registrar_usuario(self):
-        # Conectar a la base de datos
-        conexion = sqlite3.connect("./db/usuarios.db")
-        cursor = conexion.cursor()
+        try:
+            # Conectar a la base de datos
+            with sqlite3.connect("./db/usuarios.db") as conexion:
+                cursor = conexion.cursor()
 
-        # Verificar si el campo de usuario está en blanco
-        if not self.usuario.get():
-            messagebox.showerror("Error", "El campo de usuario no puede estar en blanco")
-            conexion.close()
-            return
+                # Verificar si el campo de usuario está en blanco
+                if not self.usuario.get():
+                    messagebox.showerror("Error", "El campo de usuario no puede estar en blanco")
+                    return
 
-        # Verificar si las contraseñas coinciden
-        if self.password.get() != self.confirmation.get():
-            messagebox.showerror("Error", "Las contraseñas no coinciden")
-            conexion.close()
-            return
+                # Verificar si las contraseñas coinciden
+                if self.password.get() != self.confirmation.get():
+                    messagebox.showerror("Error", "Las contraseñas no coinciden")
+                    return
 
-        # Verificar si el usuario ya existe
-        usuario = self.usuario.get()
-        cursor.execute("SELECT usuario FROM usuarios WHERE usuario=?", (usuario,))
-        existe = cursor.fetchone()
-        if existe:
-            messagebox.showerror("Error", f"El usuario '{usuario}' ya existe. Por favor, elija otro nombre de usuario.")
-            conexion.close()
-            return
+                # Verificar si el usuario ya existe
+                usuario = self.usuario.get()
+                cursor.execute("SELECT usuario FROM usuarios WHERE usuario=?", (usuario,))
+                existe = cursor.fetchone()
+                if existe:
+                    messagebox.showerror("Error", f"El usuario '{usuario}' ya existe. Por favor, elija otro nombre de usuario.")
+                    return
 
-        # Insertar nuevo usuario en la base de datos
-        contraseña = self.password.get()
-        cursor.execute("INSERT INTO usuarios (usuario, contraseña) VALUES (?, ?)", (usuario, contraseña))
-        conexion.commit()
-        conexion.close()
+                # Insertar nuevo usuario en la base de datos
+                contraseña = self.password.get()
+                cursor.execute("INSERT INTO usuarios (usuario, contraseña) VALUES (?, ?)", (usuario, contraseña))
+                conexion.commit()
 
-        messagebox.showinfo("Éxito", "Usuario registrado correctamente")
-        self.ventana.destroy()
-
+                messagebox.showinfo("Éxito", "Usuario registrado correctamente")
+                self.ventana.destroy()
+        except Exception as e:
+            messagebox.showerror("Error", f"Ocurrió un error: {e}")
 
     def __init__(self):
         self.ventana = tk.Toplevel()
@@ -99,13 +97,13 @@ class Signup_Form:
         self.confirmation.config(show="*")
         self.confirmation.pack(fill=tk.X, padx=20, pady=10)
         
-        #TODO: Boton de Registrar
-        registrar = tk.Button(frame_form, text = "Registrar", font = ("Arial", 18), bg = "#F87474", command = self.registrar_usuario)
+        # Boton de Registrar
+        registrar = tk.Button(frame_form, text="Registrar", font=("Arial", 18), bg="#F87474", command=self.registrar_usuario)
         registrar.pack()
         self.ventana.bind("<Return>", lambda event: self.registrar_usuario())
 
         # Botón para abrir el formulario de registro
-        regreso = tk.Button(frame_form, text="Iniciar sesion", font=("Arial", 15), bg="#fcfcfc", bd=0, fg="#F87474", command= self.regresar)
+        regreso = tk.Button(frame_form, text="Iniciar sesión", font=("Arial", 15), bg="#fcfcfc", bd=0, fg="#F87474", command=self.regresar)
         regreso.pack(padx=1, pady=5)
 
         self.ventana.mainloop()
