@@ -4,4 +4,4 @@ from forms.Registration.form import FormRegister
 
 #FormRegister()
 #MasterPanel()
-FormLogin()
+FormLogin() 

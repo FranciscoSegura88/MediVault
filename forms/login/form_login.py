@@ -29,10 +29,24 @@ class FormLogin(FormLoginDesigner):
             return False
         return True
 
-    def isPassword(self, password: str, user: Auth_User):
+    #def isPassword(self, password: str, user: Auth_User):
         b_password = end_dec.decrypt(user.password).decode("utf-8")
         if password == b_password:
             self.ventana.destroy()
             MasterPanel()
         else:
             messagebox.showerror(message="La contraseña no es correcta", title="Mensaje")
+
+    def isPassword(self, password, user_db):
+        if user_db is None:
+            ttk.showmessageerror(text="Usuario no encontrado")
+        else:
+            b_password = password  # Just to avoid using password before defining it
+            if user_db is not None:
+                b_password = end_dec.decrypt(user_db.password).decode("utf-8")
+            if password == b_password:
+                self.ventana.destroy()
+                self.openMainWindow(user_db)
+            else:
+                ttk.showmessageerror(text="Contraseña incorrecta")
+
