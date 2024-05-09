@@ -15,18 +15,31 @@ class Login_Form:
         conexion = sqlite3.connect("./db/usuarios.db")
         cursor = conexion.cursor()
 
-        # Verificar usuario y contraseña
+        # Verificar si el usuario existe
         usuario = self.usuario.get()
         contraseña = self.password.get()
-        cursor.execute("SELECT * FROM usuarios WHERE usuario = ? AND contraseña = ?", (usuario, contraseña))
+        cursor.execute("SELECT * FROM usuarios WHERE usuario = ?", (usuario,))
         resultado = cursor.fetchone()
-        conexion.close()
 
         if resultado:
-            self.ventana.destroy()
-            App()
+            # Verificar la contraseña
+            cursor.execute("SELECT * FROM usuarios WHERE usuario = ? AND contraseña = ?", (usuario, contraseña))
+            resultado = cursor.fetchone()
+            if resultado:
+                self.ventana.destroy()
+                App()
+            else:
+                messagebox.showerror("Error", "Contraseña incorrecta")
         else:
-            messagebox.showerror("Error", "Usuario o contraseña incorrectos")
+            # Crear nuevo usuario
+            respuesta = messagebox.askquestion("Usuario no encontrado", "El usuario no existe, ¿desea registrarse?")
+            if respuesta == "yes":
+                Signup_Form()
+            else:
+                messagebox.showinfo("Información", "Puede registrarse cuando lo desee")
+
+        conexion.close()
+
 
     def __init__(self):
         self.ventana = tk.Tk()
