@@ -4,6 +4,7 @@ from PIL import ImageTk, Image
 import sqlite3
 from forms.signup import Signup_Form
 from forms.master import App
+from util.security import Seguridad
 
 class Login_Form:
 
@@ -16,17 +17,22 @@ class Login_Form:
             with sqlite3.connect("./db/usuarios.db") as conexion:
                 cursor = conexion.cursor()
 
-                # Verificar si el usuario existe
                 usuario = self.usuario.get()
                 contraseña = self.password.get()
+
+                # Verificar si el usuario existe
                 cursor.execute("SELECT * FROM usuarios WHERE usuario = ?", (usuario,))
                 resultado = cursor.fetchone()
 
                 if resultado:
+                    # Desencriptar la contraseña almacenada en la base de datos
+                    contraseña_encriptada = resultado[1]
+                    contraseña_desencriptada = Seguridad.desencriptar(contraseña_encriptada)
+
+                    print(contraseña_desencriptada)
+
                     # Verificar la contraseña
-                    cursor.execute("SELECT * FROM usuarios WHERE usuario = ? AND contraseña = ?", (usuario, contraseña))
-                    resultado = cursor.fetchone()
-                    if resultado:
+                    if contraseña == contraseña_desencriptada:
                         self.ventana.destroy()
                         App()
                     else:
@@ -39,7 +45,8 @@ class Login_Form:
                     else:
                         messagebox.showinfo("Información", "Puede registrarse cuando lo desee")
         except Exception as e:
-            messagebox.showerror("Error", f"Ocurrió un error: {e}")
+            print("Error:", e)  # Imprimir el error completo en la consola
+            messagebox.showerror("Error", f"Hubo un error: {e}")
 
     def __init__(self):
         self.ventana = tk.Tk()

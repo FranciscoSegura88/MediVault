@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import ttk, messagebox
 from PIL import ImageTk, Image
+from util.security import Seguridad
 import sqlite3
 
 class Signup_Form:
@@ -9,38 +10,47 @@ class Signup_Form:
         self.ventana.destroy()
 
     def registrar_usuario(self):
+
+        usuario = self.usuario.get()
+        contraseña = self.password.get()
+        confirmacion = self.confirmation.get()
+
         try:
             # Conectar a la base de datos
             with sqlite3.connect("./db/usuarios.db") as conexion:
                 cursor = conexion.cursor()
 
                 # Verificar si el campo de usuario está en blanco
-                if not self.usuario.get():
+                if not usuario:
                     messagebox.showerror("Error", "El campo de usuario no puede estar en blanco")
                     return
 
                 # Verificar si las contraseñas coinciden
-                if self.password.get() != self.confirmation.get():
+                if contraseña != confirmacion:
                     messagebox.showerror("Error", "Las contraseñas no coinciden")
                     return
 
                 # Verificar si el usuario ya existe
-                usuario = self.usuario.get()
                 cursor.execute("SELECT usuario FROM usuarios WHERE usuario=?", (usuario,))
                 existe = cursor.fetchone()
                 if existe:
                     messagebox.showerror("Error", f"El usuario '{usuario}' ya existe. Por favor, elija otro nombre de usuario.")
                     return
 
+                #Generar clave y encriptar contraseña
+                contraseña_encriptada = Seguridad.encriptar(contraseña)
+                print("Contraseña:", contraseña_encriptada)
+
                 # Insertar nuevo usuario en la base de datos
-                contraseña = self.password.get()
-                cursor.execute("INSERT INTO usuarios (usuario, contraseña) VALUES (?, ?)", (usuario, contraseña))
+                cursor.execute("INSERT INTO usuarios (usuario, contraseña) VALUES (?, ?)", (usuario, contraseña_encriptada))
                 conexion.commit()
 
                 messagebox.showinfo("Éxito", "Usuario registrado correctamente")
                 self.ventana.destroy()
         except Exception as e:
             messagebox.showerror("Error", f"Ocurrió un error: {e}")
+
+
 
     def __init__(self):
         self.ventana = tk.Toplevel()
